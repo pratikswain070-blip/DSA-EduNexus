@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Directory | EduNexus</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-tertiary-fixed-variant":"#005236","on-error-container":"#93000a","on-primary-fixed":"#001b3d","tertiary-fixed":"#6ffbbe","inverse-surface":"#2d3133","on-primary":"#ffffff","on-secondary-fixed-variant":"#3a485b","surface-variant":"#e0e3e5","tertiary-fixed-dim":"#4edea3","on-primary-fixed-variant":"#2d476f","tertiary":"#000d06","on-tertiary-container":"#009c6b","surface-container":"#eceef0","on-tertiary-fixed":"#002113","surface-container-low":"#f2f4f6","primary-container":"#002147","error":"#ba1a1a","surface-container-lowest":"#ffffff","secondary-container":"#d5e3fc","error-container":"#ffdad6","on-surface-variant":"#44474e","surface-tint":"#465f88","primary-fixed-dim":"#aec7f6","inverse-on-surface":"#eff1f3","on-background":"#191c1e","on-secondary-container":"#57657a","surface-dim":"#d8dadc","on-secondary":"#ffffff","outline":"#74777f","surface-container-highest":"#e0e3e5","on-error":"#ffffff","on-secondary-fixed":"#0d1c2e","secondary-fixed-dim":"#b9c7df","inverse-primary":"#aec7f6","surface":"#f7f9fb","secondary":"#515f74","outline-variant":"#c4c6cf","primary":"#000a1e","surface-container-high":"#e6e8ea","primary-fixed":"#d6e3ff","on-primary-container":"#708ab5","tertiary-container":"#002718","background":"#f7f9fb","surface-bright":"#f7f9fb","secondary-fixed":"#d5e3fc","on-surface":"#191c1e","on-tertiary":"#ffffff"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"sm":"12px","xs":"4px","md":"16px","gutter":"24px","lg":"24px","xl":"32px","base":"8px","margin":"32px","xxl":"48px"},"fontFamily":{"mono-sm":["JetBrains Mono"],"body-lg":["Inter"],"label-md":["Inter"],"headline-sm":["Inter"],"display-lg":["Inter"],"headline-md":["Inter"],"body-md":["Inter"]},"fontSize":{"mono-sm":["12px",{"lineHeight":"16px","fontWeight":"500"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"600"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"display-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}]}}}};
+</script>
+<style>
+body{font-family:'Inter',sans-serif}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;display:inline-block;vertical-align:middle;line-height:1}
+.toast{position:fixed;top:80px;right:24px;z-index:9999;padding:12px 20px;border-radius:8px;color:#fff;font-size:13px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none}.toast.show{opacity:1}.toast-ok{background:#009c6b}.toast-err{background:#ba1a1a}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;display:none;align-items:center;justify-content:center}.modal-bg.show{display:flex}
+</style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- Sidebar -->
+<aside class="w-[280px] h-full fixed left-0 top-0 flex flex-col py-xl bg-surface-container-lowest border-r border-outline-variant z-40">
+<div class="px-lg mb-xxl flex flex-col gap-xs">
+  <span class="font-headline-md text-headline-md font-bold text-primary">EduNexus</span>
+  <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Command Center</span>
+</div>
+<nav class="flex-1 space-y-1">
+  <a class="flex items-center gap-md px-lg py-sm text-secondary hover:bg-surface-container transition-colors duration-200" href="/"><span class="material-symbols-outlined">dashboard</span><span class="font-label-md text-label-md">Dashboard</span></a>
+  <a class="flex items-center gap-md px-lg py-sm text-primary font-bold border-r-4 border-primary bg-surface-container-high transition-all duration-150" href="/directory"><span class="material-symbols-outlined">group</span><span class="font-label-md text-label-md">Student Directory</span></a>
+  <a class="flex items-center gap-md px-lg py-sm text-secondary hover:bg-surface-container transition-colors duration-200" href="/admissions"><span class="material-symbols-outlined">pending_actions</span><span class="font-label-md text-label-md">Admissions Queue</span></a>
+  <a class="flex items-center gap-md px-lg py-sm text-secondary hover:bg-surface-container transition-colors duration-200" href="/hierarchy"><span class="material-symbols-outlined">account_tree</span><span class="font-label-md text-label-md">Curriculum Map</span></a>
+</nav>
+</aside>
+<!-- TopBar -->
+<header class="fixed top-0 left-[280px] right-0 h-16 flex justify-between items-center px-gutter bg-surface border-b border-outline-variant z-30">
+<h1 class="font-headline-sm text-headline-sm font-black tracking-tight text-primary">Student Directory</h1>
+<button onclick="showAddModal()" class="flex items-center gap-xs bg-primary-container text-on-primary px-lg py-sm rounded-lg font-label-md text-label-md hover:brightness-110 transition-all">
+  <span class="material-symbols-outlined text-[18px]">add</span> Add Student
+</button>
+</header>
+
+<!-- Main -->
+<main class="ml-[280px] pt-16 pb-12 min-h-screen px-gutter">
+<div class="max-w-[1440px] mx-auto py-xl">
+  <!-- Search Section -->
+  <section class="mb-xl bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col gap-lg">
+    <div class="flex items-center justify-between">
+      <div><h2 class="font-headline-md text-headline-md text-primary">Records Repository</h2></div>
+      <div class="flex bg-surface-container-low p-xs rounded-lg border border-outline-variant">
+        <button id="btnSearchId" onclick="setSearchMode('id')" class="px-md py-xs font-label-md text-label-md rounded bg-surface-container-lowest text-primary shadow-sm">Search by ID</button>
+        <button id="btnSearchName" onclick="setSearchMode('name')" class="px-md py-xs font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors">Search by Name</button>
+      </div>
+    </div>
+    <div class="relative w-full">
+      <span class="material-symbols-outlined absolute left-lg top-1/2 -translate-y-1/2 text-primary text-[28px]">search</span>
+      <input id="searchInput" class="w-full pl-[64px] pr-xl py-lg text-lg bg-surface border-slate-200 border rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all outline-none font-body-lg" placeholder="Search by student ID..." type="text"/>
+      <div class="absolute right-md top-1/2 -translate-y-1/2 flex items-center gap-sm">
+        <button onclick="doSearch()" class="bg-primary text-on-primary px-lg py-sm rounded-lg font-label-md text-label-md hover:brightness-110 transition-all flex items-center gap-xs">
+          <span class="material-symbols-outlined text-[18px]">search</span> Search
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sort Button -->
+  <div class="flex justify-between items-center mb-md">
+    <span id="recordCount" class="font-label-md text-label-md text-on-surface-variant"></span>
+    <div class="flex items-center gap-sm">
+      <select id="sortAlgo" class="px-md py-sm border border-outline-variant rounded-lg font-label-md text-label-md text-secondary bg-white">
+        <option value="insertion">Insertion Sort (by ID)</option>
+        <option value="bubble">Bubble Sort (by ID)</option>
+        <option value="merge">Merge Sort (by GPA)</option>
+        <option value="quick">Quick Sort (by Name)</option>
+      </select>
+      <button onclick="sortStudents()" class="flex items-center gap-xs px-md py-sm bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:brightness-110 transition-all">
+        <span class="material-symbols-outlined text-[18px]">sort</span> Sort
+      </button>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+    <table class="w-full text-left border-collapse">
+      <thead class="bg-surface-container-low border-b border-outline-variant">
+        <tr>
+          <th class="px-lg py-md font-label-md text-label-md text-primary">Student Name</th>
+          <th class="px-lg py-md font-label-md text-label-md text-primary">Student ID</th>
+          <th class="px-lg py-md font-label-md text-label-md text-primary">Academic GPA</th>
+          <th class="px-lg py-md font-label-md text-label-md text-primary text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="studentTableBody" class="divide-y divide-outline-variant/30"></tbody>
+    </table>
+  </div>
+</div>
+</main>
+
+<!-- Undo FAB -->
+<button onclick="undoAction()" class="fixed bottom-12 right-margin w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg hover:shadow-xl hover:brightness-110 transition-all flex items-center justify-center z-50 group" title="Undo last action">
+  <span class="material-symbols-outlined text-[24px]">undo</span>
+</button>
+
+<!-- Footer -->
+<footer id="footerBar" class="fixed bottom-0 left-0 w-full z-50 h-8 bg-primary-container flex items-center justify-between px-md border-t border-on-tertiary-container shadow-md">
+<div class="flex items-center gap-lg">
+  <span class="font-mono-sm text-mono-sm text-on-tertiary-container flex items-center gap-xs"><span class="w-2 h-2 rounded-full bg-on-tertiary-container animate-pulse"></span>Connected</span>
+</div>
+<span class="font-mono-sm text-mono-sm text-on-tertiary-container/60">© 2026 EduNexus</span>
+</footer>
+
+<!-- Add Student Modal -->
+<div id="addModal" class="modal-bg">
+<div class="bg-white rounded-xl shadow-xl w-full max-w-md p-xl">
+  <h3 class="font-headline-md text-headline-md text-primary mb-lg">Add New Student</h3>
+  <div class="space-y-md">
+    <div><label class="font-label-md text-label-md text-secondary block mb-xs">Student ID</label>
+      <input id="addId" type="number" class="w-full border border-outline-variant rounded-lg px-md py-sm focus:ring-2 focus:ring-primary outline-none" placeholder="e.g. 11"/></div>
+    <div><label class="font-label-md text-label-md text-secondary block mb-xs">Full Name</label>
+      <input id="addName" type="text" class="w-full border border-outline-variant rounded-lg px-md py-sm focus:ring-2 focus:ring-primary outline-none" placeholder="e.g. John Smith"/></div>
+    <div><label class="font-label-md text-label-md text-secondary block mb-xs">GPA</label>
+      <input id="addGpa" type="number" step="0.01" min="0" max="4" class="w-full border border-outline-variant rounded-lg px-md py-sm focus:ring-2 focus:ring-primary outline-none" placeholder="e.g. 3.75"/></div>
+  </div>
+  <div class="flex justify-end gap-md mt-xl">
+    <button onclick="hideAddModal()" class="px-lg py-sm border border-outline-variant rounded-lg font-label-md text-label-md text-secondary hover:bg-surface-container">Cancel</button>
+    <button onclick="addStudent()" class="px-lg py-sm bg-primary-container text-on-primary rounded-lg font-label-md text-label-md hover:brightness-110 transition-all">Add Student</button>
+  </div>
+</div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+let searchMode='id';
+function toast(msg,ok=true){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+(ok?'toast-ok':'toast-err');setTimeout(()=>t.className='toast',2500);}
+
+function setSearchMode(mode){
+  searchMode=mode;
+  document.getElementById('btnSearchId').className='px-md py-xs font-label-md text-label-md rounded '+(mode==='id'?'bg-surface-container-lowest text-primary shadow-sm':'text-on-surface-variant hover:text-primary transition-colors');
+  document.getElementById('btnSearchName').className='px-md py-xs font-label-md text-label-md rounded '+(mode==='name'?'bg-surface-container-lowest text-primary shadow-sm':'text-on-surface-variant hover:text-primary transition-colors');
+  document.getElementById('searchInput').placeholder=mode==='id'?'Search by student ID...':'Search by student name...';
+  document.getElementById('searchInput').type=mode==='id'?'text':'text';
+}
+
+async function loadStudents(){
+  const res=await fetch('/api/students'); const data=await res.json();
+  const students=data.students||[];
+  document.getElementById('recordCount').textContent=students.length+' student records';
+  const tb=document.getElementById('studentTableBody');
+  if(!students.length){tb.innerHTML='<tr><td colspan="4" class="px-lg py-xl text-center text-on-surface-variant">No students found. Add one!</td></tr>';return;}
+  tb.innerHTML=students.map(s=>{
+    const initials=s.name.replace(/_/g,' ').split(' ').map(w=>w[0]).join('').slice(0,2);
+    const colors=['bg-secondary-container text-on-secondary-container','bg-primary-fixed-dim text-on-primary-fixed','bg-secondary-fixed text-on-secondary-fixed','bg-tertiary-fixed text-on-tertiary-fixed'];
+    const color=colors[s.id%colors.length];
+    return `<tr id="student-row-${s.id}" class="hover:bg-slate-50 transition-colors duration-500">
+      <td class="px-lg py-md"><div class="flex items-center gap-md">
+        <div class="w-10 h-10 rounded-full ${color} flex items-center justify-center font-bold">${initials}</div>
+        <span class="font-body-md text-body-md font-semibold text-primary">${s.name.replace(/_/g,' ')}</span></div></td>
+      <td class="px-lg py-md font-mono-sm text-mono-sm text-on-surface">#EDU-${s.id}</td>
+      <td class="px-lg py-md"><div class="flex items-center gap-xs">
+        <span class="font-body-md text-body-md font-bold text-primary">${s.gpa.toFixed(2)}</span>
+        <div class="w-16 h-1.5 bg-surface-container-high rounded-full overflow-hidden"><div class="bg-on-tertiary-container h-full" style="width:${(s.gpa/4*100).toFixed(0)}%"></div></div></div></td>
+      <td class="px-lg py-md text-right">
+        <button onclick="deleteStudent(${s.id})" class="p-xs hover:bg-error-container rounded-lg text-on-surface-variant hover:text-error transition-all" title="Delete">
+          <span class="material-symbols-outlined">delete</span></button></td>
+    </tr>`;
+  }).join('');
+}
+
+async function doSearch(){
+  const val=document.getElementById('searchInput').value.trim();
+  if(!val){toast('Enter a search term',false);return;}
+  
+  // Clear previous highlights
+  document.querySelectorAll('tr[id^="student-row-"]').forEach(el => {
+    el.classList.remove('bg-secondary-container');
+  });
+
+  if(searchMode==='id'){
+    const id=parseInt(val);
+    if(isNaN(id)){toast('Enter a valid student ID',false);return;}
+    const res=await fetch('/api/students/search/'+id); const data=await res.json();
+    if(data.found) {
+      toast('Found: '+data.student.name.replace(/_/g,' ')+' (GPA: '+data.student.gpa.toFixed(2)+')');
+      const row = document.getElementById('student-row-'+id);
+      if(row) {
+        row.scrollIntoView({behavior: 'smooth', block: 'center'});
+        row.classList.add('bg-secondary-container');
+        setTimeout(() => row.classList.remove('bg-secondary-container'), 3000);
+      }
+    }
+    else toast('Student ID '+id+' not found',false);
+  } else {
+    const res=await fetch('/api/students/searchname/'+encodeURIComponent(val)); const data=await res.json();
+    const results=data.results||[];
+    if(results.length) {
+      toast('Found '+results.length+' student(s) matching "'+val+'"');
+      let first = true;
+      results.forEach(r => {
+        const row = document.getElementById('student-row-'+r.id);
+        if(row) {
+          if(first) { row.scrollIntoView({behavior: 'smooth', block: 'center'}); first = false; }
+          row.classList.add('bg-secondary-container');
+          setTimeout(() => row.classList.remove('bg-secondary-container'), 3000);
+        }
+      });
+    }
+    else toast('No students found matching "'+val+'"',false);
+  }
+}
+document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch();});
+
+async function sortStudents(){
+  const algo=document.getElementById('sortAlgo').value;
+  const res=await fetch('/api/students/sort',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({algorithm:algo})});
+  const data=await res.json();
+  toast(data.message||'Students sorted');
+  loadStudents();
+}
+
+async function deleteStudent(id){
+  if(!confirm('Delete student #'+id+'?'))return;
+  const res=await fetch('/api/students/'+id,{method:'DELETE'}); const data=await res.json();
+  if(data.status==='ok'){toast('Deleted: '+data.student.name.replace(/_/g,' '));loadStudents();}
+  else toast(data.error||'Delete failed',false);
+}
+
+async function undoAction(){
+  const res=await fetch('/api/students/undo',{method:'POST'}); const data=await res.json();
+  if(data.status==='ok'){toast('Undo successful: '+data.message);loadStudents();}
+  else toast(data.message||'Nothing to undo',false);
+}
+
+function showAddModal(){document.getElementById('addModal').classList.add('show');}
+function hideAddModal(){document.getElementById('addModal').classList.remove('show');}
+async function addStudent(){
+  const id=parseInt(document.getElementById('addId').value);
+  const name=document.getElementById('addName').value.trim();
+  const gpa=parseFloat(document.getElementById('addGpa').value);
+  if(isNaN(id)||!name||isNaN(gpa)){toast('Fill all fields correctly',false);return;}
+  const res=await fetch('/api/students',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,name,gpa})});
+  const data=await res.json();
+  if(data.status==='ok'){toast('Added: '+name);hideAddModal();loadStudents();
+    document.getElementById('addId').value='';document.getElementById('addName').value='';document.getElementById('addGpa').value='';}
+  else toast(data.error||'Add failed',false);
+}
+
+loadStudents();
+</script>
+</body></html>

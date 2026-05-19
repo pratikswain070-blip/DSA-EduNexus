@@ -1,0 +1,37 @@
+add 101
+add 11
+add 999
+add 1000
+add 1001
+add 12
+add 1002
+delete 8 "Hannah_Williams" 3.95
+delete 1 "Alexander_Abernathy" 3.92
+delete 12 "ajit" 5.00
+add 12
+add 1003
+add 1004
+add 23
+add 1005
+add 1006
+add 1007
+delete 2 "Beatrice_Loughton" 3.75
+delete 3 "Caleb_Higgins" 3.41
+delete 4 "Diana_Morales" 3.88
+delete 5 "Ethan_Park" 3.15
+delete 6 "Fiona_Chen" 3.67
+delete 7 "Gabriel_Santos" 3.50
+delete 9 "Isaac_Kumar" 2.98
+delete 10 "Julia_Thompson" 3.82
+add 1
+add 2
+add 4
+delete 1002 "rt" 0.00
+delete 1001 "tarun" 0.00
+delete 1000 "pratik" 0.00
+add 9
+delete 11 "pratik" 1.23
+delete 1003 "Yuvraj" 0.00
+add 8
+add 3
+add 1008

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EduNexus Command Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  body { font-family: 'Inter', sans-serif; background-color: #f7f9fb; }
+  .toast{position:fixed;top:80px;right:24px;z-index:9999;padding:12px 20px;border-radius:8px;color:#fff;font-size:13px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none}
+  .toast.show{opacity:1}
+  .toast-ok{background:#009c6b}.toast-err{background:#ba1a1a}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  .fade-up{animation:fadeUp .4s ease}
+</style>
+<script id="tailwind-config">
+tailwind.config = { darkMode:"class", theme:{ extend:{
+  "colors":{"on-tertiary-fixed-variant":"#005236","on-error-container":"#93000a","on-primary-fixed":"#001b3d","tertiary-fixed":"#6ffbbe","inverse-surface":"#2d3133","on-primary":"#ffffff","on-secondary-fixed-variant":"#3a485b","surface-variant":"#e0e3e5","tertiary-fixed-dim":"#4edea3","on-primary-fixed-variant":"#2d476f","tertiary":"#000d06","on-tertiary-container":"#009c6b","surface-container":"#eceef0","on-tertiary-fixed":"#002113","surface-container-low":"#f2f4f6","primary-container":"#002147","error":"#ba1a1a","surface-container-lowest":"#ffffff","secondary-container":"#d5e3fc","error-container":"#ffdad6","on-surface-variant":"#44474e","surface-tint":"#465f88","primary-fixed-dim":"#aec7f6","inverse-on-surface":"#eff1f3","on-background":"#191c1e","on-secondary-container":"#57657a","surface-dim":"#d8dadc","on-secondary":"#ffffff","outline":"#74777f","surface-container-highest":"#e0e3e5","on-error":"#ffffff","on-secondary-fixed":"#0d1c2e","secondary-fixed-dim":"#b9c7df","inverse-primary":"#aec7f6","surface":"#f7f9fb","secondary":"#515f74","outline-variant":"#c4c6cf","primary":"#000a1e","surface-container-high":"#e6e8ea","primary-fixed":"#d6e3ff","on-primary-container":"#708ab5","tertiary-container":"#002718","background":"#f7f9fb","surface-bright":"#f7f9fb","secondary-fixed":"#d5e3fc","on-surface":"#191c1e","on-tertiary":"#ffffff"},
+  "borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},
+  "spacing":{"sm":"12px","xs":"4px","md":"16px","gutter":"24px","lg":"24px","xl":"32px","base":"8px","margin":"32px","xxl":"48px"},
+  "fontFamily":{"mono-sm":["JetBrains Mono"],"body-lg":["Inter"],"label-md":["Inter"],"headline-sm":["Inter"],"display-lg":["Inter"],"headline-md":["Inter"],"body-md":["Inter"]},
+  "fontSize":{"mono-sm":["12px",{"lineHeight":"16px","fontWeight":"500"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"600"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"display-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}]}
+}}};
+</script>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- SideNavBar -->
+<nav class="w-[280px] h-full fixed left-0 top-0 flex flex-col py-xl bg-surface-container-lowest border-r border-outline-variant z-50">
+<div class="px-gutter mb-xxl flex items-center gap-md">
+  <div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center">
+    <span class="material-symbols-outlined text-on-primary">account_balance</span>
+  </div>
+  <div>
+    <h1 class="font-headline-md text-headline-md font-bold text-primary">EduNexus</h1>
+    <p class="font-label-md text-label-md text-secondary uppercase tracking-widest">Command Center</p>
+  </div>
+</div>
+<div class="flex-1 space-y-xs px-md">
+  <a class="flex items-center gap-md px-md py-sm rounded transition-all duration-150 text-primary font-bold border-r-4 border-primary bg-surface-container-high" href="/">
+    <span class="material-symbols-outlined">dashboard</span><span class="font-label-md text-label-md">Dashboard</span>
+  </a>
+  <a class="flex items-center gap-md px-md py-sm rounded transition-colors duration-200 text-secondary hover:text-primary hover:bg-surface-container" href="/directory">
+    <span class="material-symbols-outlined">group</span><span class="font-label-md text-label-md">Student Directory</span>
+  </a>
+  <a class="flex items-center gap-md px-md py-sm rounded transition-colors duration-200 text-secondary hover:text-primary hover:bg-surface-container" href="/admissions">
+    <span class="material-symbols-outlined">pending_actions</span><span class="font-label-md text-label-md">Admissions Queue</span>
+  </a>
+  <a class="flex items-center gap-md px-md py-sm rounded transition-colors duration-200 text-secondary hover:text-primary hover:bg-surface-container" href="/hierarchy">
+    <span class="material-symbols-outlined">account_tree</span><span class="font-label-md text-label-md">Curriculum Map</span>
+  </a>
+</div>
+<div class="px-md mt-auto pt-gutter border-t border-outline-variant space-y-xs">
+  <a class="flex items-center gap-md px-md py-sm rounded text-secondary hover:text-primary hover:bg-surface-container transition-colors duration-200" href="#">
+    <span class="material-symbols-outlined">settings</span><span class="font-label-md text-label-md">Settings</span>
+  </a>
+</div>
+</nav>
+<!-- TopAppBar -->
+<header class="flex justify-between items-center h-16 px-gutter ml-[280px] fixed top-0 left-0 right-0 bg-surface border-b border-outline-variant z-40">
+<h2 class="font-headline-sm text-headline-sm font-black tracking-tight text-primary">EduNexus Command Center</h2>
+<div class="flex items-center gap-lg">
+  <div class="relative">
+    <span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+    <input id="globalSearch" class="bg-surface-container-low border-none rounded-lg pl-10 py-xs text-body-md w-64 focus:ring-2 focus:ring-primary focus:ring-opacity-10 outline-none" placeholder="Search by Student ID..." type="text"/>
+  </div>
+  <button onclick="doGlobalSearch()" class="bg-primary-container text-on-primary px-md py-xs rounded-lg font-label-md text-label-md hover:brightness-110 transition-all">Search</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-[280px] pt-16 pb-12 px-gutter min-h-screen">
+<div class="max-w-[1440px] mx-auto py-xl">
+  <!-- Quick Stats -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl">
+    <div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex items-center gap-lg fade-up">
+      <div class="w-14 h-14 bg-secondary-container rounded-lg flex items-center justify-center text-on-secondary-container">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">group</span>
+      </div>
+      <div>
+        <p class="font-label-md text-label-md text-on-surface-variant mb-xs">Total Students</p>
+        <h3 id="statTotal" class="font-headline-md text-headline-md font-bold text-primary">—</h3>
+        <p class="text-on-tertiary-container font-mono-sm text-[10px] mt-xs">Enrolled students</p>
+      </div>
+    </div>
+    <div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex items-center gap-lg fade-up" style="animation-delay:.1s">
+      <div class="w-14 h-14 bg-primary-container rounded-lg flex items-center justify-center text-on-primary">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">pending_actions</span>
+      </div>
+      <div>
+        <p class="font-label-md text-label-md text-on-surface-variant mb-xs">Admission Queue</p>
+        <h3 id="statQueue" class="font-headline-md text-headline-md font-bold text-primary">—</h3>
+        <p class="text-on-tertiary-container font-mono-sm text-[10px] mt-xs">Pending applications</p>
+      </div>
+    </div>
+    <div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex items-center gap-lg fade-up" style="animation-delay:.2s">
+      <div class="w-14 h-14 bg-tertiary-fixed rounded-lg flex items-center justify-center text-on-tertiary-fixed">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">trending_up</span>
+      </div>
+      <div>
+        <p class="font-label-md text-label-md text-on-surface-variant mb-xs">GPA Trend</p>
+        <h3 id="statLIS" class="font-headline-md text-headline-md font-bold text-primary">—</h3>
+        <p class="text-on-tertiary-container font-mono-sm text-[10px] mt-xs">Consistent improvement</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GPA Trend & Study Planner -->
+  <div class="grid grid-cols-12 gap-lg">
+    <!-- GPA Chart -->
+    <div class="col-span-12 lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+      <div class="p-lg flex justify-between items-center border-b border-outline-variant">
+        <div>
+          <h3 class="font-headline-sm text-headline-sm text-primary">GPA Trend Analysis</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant">Cross-student academic performance tracking</p>
+        </div>
+        <div class="flex gap-sm">
+          <div class="flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-outline-variant"></span><span class="font-label-md text-label-md text-on-surface-variant">All GPAs</span></div>
+          <div class="flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-on-tertiary-container"></span><span class="font-label-md text-label-md text-on-tertiary-container">Top Performers</span></div>
+        </div>
+      </div>
+      <div class="p-lg h-[400px] relative">
+        <canvas id="gpaCanvas" class="w-full h-full"></canvas>
+      </div>
+    </div>
+
+    <!-- Study Planner -->
+    <div class="col-span-12 lg:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col">
+      <div class="p-lg border-b border-outline-variant flex items-center gap-sm">
+        <span class="material-symbols-outlined text-primary">event_note</span>
+        <h3 class="font-headline-sm text-headline-sm text-primary">Study Planner</h3>
+      </div>
+      <div id="sessionsContainer" class="flex-1 p-lg space-y-md overflow-y-auto max-h-[340px]">
+        <p class="text-on-surface-variant text-sm">Loading sessions...</p>
+      </div>
+      <div class="p-lg bg-surface-container-low border-t border-outline-variant text-center">
+        <button onclick="runGreedy()" class="w-full bg-primary-container text-on-primary py-sm rounded-lg font-label-md text-label-md hover:brightness-110 transition-all flex items-center justify-center gap-sm">
+          <span class="material-symbols-outlined text-sm">auto_awesome</span> Optimize Schedule
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Students -->
+  <div class="mt-xl bg-white border border-outline-variant rounded-xl p-lg">
+    <div class="flex justify-between items-center mb-lg">
+      <h4 class="font-headline-sm text-headline-sm text-primary">Recent Students</h4>
+      <a href="/directory" class="text-on-tertiary-container font-label-md text-label-md hover:underline">View All →</a>
+    </div>
+    <div id="recentStudents" class="space-y-sm">
+      <p class="text-on-surface-variant text-sm">Loading...</p>
+    </div>
+  </div>
+</div>
+</main>
+
+<!-- Footer -->
+<footer id="footerBar" class="fixed bottom-0 left-0 w-full z-50 h-8 bg-primary-container border-t border-on-tertiary-container shadow-md flex items-center justify-between px-md">
+<div class="flex items-center gap-md">
+  <div class="flex items-center gap-xs">
+    <div class="w-2 h-2 rounded-full bg-tertiary-fixed-dim animate-pulse"></div>
+    <span class="font-mono-sm text-mono-sm text-tertiary-fixed-dim">Connected</span>
+  </div>
+</div>
+<span class="font-mono-sm text-mono-sm text-on-tertiary-container">© 2026 EduNexus</span>
+</footer>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<script>
+// === UTILITY ===
+function toast(msg, ok=true){ const t=document.getElementById('toast'); t.textContent=msg; t.className='toast show '+(ok?'toast-ok':'toast-err'); setTimeout(()=>t.className='toast',2500); }
+function setFooter(t){ document.getElementById('footerAlgo').textContent=t; }
+
+// === LOAD DASHBOARD DATA ===
+async function loadDashboard(){
+  try{
+    // Students
+    const sRes = await fetch('/api/students'); const sData = await sRes.json();
+    document.getElementById('statTotal').textContent = sData.count || 0;
+
+    // Queue
+    const qRes = await fetch('/api/admissions'); const qData = await qRes.json();
+    document.getElementById('statQueue').textContent = qData.count || 0;
+
+    // GPA Trend
+    const gRes = await fetch('/api/analytics/gpatrend'); const gData = await gRes.json();
+    document.getElementById('statLIS').textContent = (gData.length || 0) + ' students';
+    drawGPAChart(gData);
+
+    // Greedy
+    const grRes = await fetch('/api/analytics/greedy'); const grData = await grRes.json();
+    renderSessions(grData);
+
+    // Recent Students (last 5)
+    renderRecentStudents(sData.students || []);
+  } catch(e){ toast('Failed to load dashboard: '+e.message, false); }
+}
+
+// === GPA CHART (Canvas) ===
+function drawGPAChart(data){
+  const canvas = document.getElementById('gpaCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth * 2;
+  canvas.height = canvas.offsetHeight * 2;
+  ctx.scale(2,2);
+  const W = canvas.offsetWidth, H = canvas.offsetHeight;
+  const pad = {t:20,r:20,b:40,l:40};
+  const cW = W-pad.l-pad.r, cH = H-pad.t-pad.b;
+
+  const gpas = data.allGpas || [];
+  if(!gpas.length) return;
+  const lisIndices = new Set((data.path||[]).map(p=>p.index));
+  const minG = Math.min(...gpas)-0.2, maxG = Math.max(...gpas)+0.2;
+  const toX = i => pad.l + (i/(gpas.length-1||1))*cW;
+  const toY = g => pad.t + cH - ((g-minG)/(maxG-minG))*cH;
+
+  // Grid
+  ctx.strokeStyle='#e2e8f0'; ctx.lineWidth=0.5;
+  for(let i=0;i<5;i++){const y=pad.t+cH*i/4; ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke();
+    ctx.fillStyle='#94a3b8';ctx.font='10px JetBrains Mono';ctx.fillText((maxG-(maxG-minG)*i/4).toFixed(1),4,y+4);}
+
+  // All GPAs line
+  ctx.strokeStyle='#c4c6cf'; ctx.lineWidth=2; ctx.setLineDash([5,5]); ctx.beginPath();
+  gpas.forEach((g,i)=>{i===0?ctx.moveTo(toX(i),toY(g)):ctx.lineTo(toX(i),toY(g));}); ctx.stroke(); ctx.setLineDash([]);
+
+  // LIS path
+  const lisPath = (data.path||[]).sort((a,b)=>a.index-b.index);
+  if(lisPath.length>1){
+    ctx.strokeStyle='#009c6b'; ctx.lineWidth=3; ctx.beginPath();
+    lisPath.forEach((p,i)=>{i===0?ctx.moveTo(toX(p.index),toY(p.gpa)):ctx.lineTo(toX(p.index),toY(p.gpa));}); ctx.stroke();
+  }
+
+  // Dots + labels
+  gpas.forEach((g,i)=>{
+    const isLIS = lisIndices.has(i);
+    ctx.fillStyle = isLIS?'#002147':'#94a3b8';
+    ctx.beginPath(); ctx.arc(toX(i),toY(g),isLIS?6:4,0,Math.PI*2); ctx.fill();
+    if(isLIS){ctx.strokeStyle='#009c6b';ctx.lineWidth=2;ctx.beginPath();ctx.arc(toX(i),toY(g),8,0,Math.PI*2);ctx.stroke();}
+    ctx.fillStyle='#44474e';ctx.font='10px JetBrains Mono';ctx.textAlign='center';
+    ctx.fillText('ID:'+((data.path||[]).find(p=>p.index===i)?.id||(i+1)),toX(i),H-pad.b+16);
+  });
+}
+
+// === SESSIONS ===
+function renderSessions(data){
+  const c = document.getElementById('sessionsContainer');
+  const selSet = new Set((data.selected||[]).map(s=>s.name));
+  const all = data.all || [];
+  if(!all.length){c.innerHTML='<p class="text-on-surface-variant text-sm">No sessions found</p>';return;}
+  c.innerHTML = all.map(s=>{
+    const sel = selSet.has(s.name);
+    const startH = Math.floor(s.start/60), startM = s.start%60;
+    const endH = Math.floor(s.end/60), endM = s.end%60;
+    const fmt = (h,m)=>(h>12?(h-12):h)+':'+(m<10?'0':'')+m+' '+(h>=12?'PM':'AM');
+    return `<div class="${sel?'bg-surface-container-low border-l-4 border-primary':'bg-white border border-outline-variant opacity-60'} p-sm rounded-lg">
+      <div class="flex justify-between items-start mb-xs">
+        <span class="font-label-md text-label-md ${sel?'text-primary':'text-secondary'}">${s.name.replace(/_/g,' ')}</span>
+        <span class="${sel?'bg-tertiary-fixed text-on-tertiary-fixed':'font-mono-sm text-error'} text-[10px] px-xs py-[2px] rounded font-bold">${sel?'SELECTED':'OVERLAP'}</span>
+      </div>
+      <p class="font-mono-sm text-mono-sm text-on-surface-variant">${fmt(startH,startM)} - ${fmt(endH,endM)}</p>
+    </div>`;
+  }).join('');
+}
+
+async function runGreedy(){
+  const res = await fetch('/api/analytics/greedy'); const data = await res.json();
+  renderSessions(data);
+  toast(data.selected.length+' optimal sessions selected');
+}
+
+// === RECENT STUDENTS ===
+function renderRecentStudents(students){
+  const c = document.getElementById('recentStudents');
+  const recent = students.slice(-5).reverse();
+  if(!recent.length){c.innerHTML='<p class="text-sm text-on-surface-variant">No students yet. <a href="/directory" class="text-primary underline">Add one</a></p>';return;}
+  c.innerHTML = recent.map(s=>`
+    <div class="flex items-center justify-between p-sm hover:bg-surface-container-low transition-colors rounded">
+      <div class="flex items-center gap-md">
+        <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-sm">${s.name.replace(/_/g,' ').split(' ').map(w=>w[0]).join('').slice(0,2)}</div>
+        <div><span class="font-body-md text-body-md font-semibold text-primary">${s.name.replace(/_/g,' ')}</span><br>
+        <span class="font-mono-sm text-mono-sm text-on-surface-variant">ID: ${s.id}</span></div>
+      </div>
+      <div class="flex items-center gap-sm">
+        <span class="font-body-md text-body-md font-bold text-primary">${s.gpa.toFixed(2)}</span>
+        <div class="w-16 h-1.5 bg-surface-container-high rounded-full overflow-hidden"><div class="bg-on-tertiary-container h-full" style="width:${(s.gpa/4*100).toFixed(0)}%"></div></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// === GLOBAL SEARCH ===
+async function doGlobalSearch(){
+  const id = parseInt(document.getElementById('globalSearch').value);
+  if(isNaN(id)){toast('Enter a valid student ID',false);return;}
+  const res = await fetch('/api/students/bsearch/'+id); const data = await res.json();
+  if(data.found){
+    toast('Found: '+data.student.name.replace(/_/g,' ')+' (GPA: '+data.student.gpa+')');
+  } else {
+    toast('Student ID '+id+' not found',false);
+  }
+}
+document.getElementById('globalSearch').addEventListener('keydown',e=>{if(e.key==='Enter')doGlobalSearch();});
+
+// === INIT ===
+loadDashboard();
+</script>
+</body></html>

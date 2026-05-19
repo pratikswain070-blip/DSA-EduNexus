@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admissions Queue | EduNexus</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-tertiary-fixed-variant":"#005236","on-error-container":"#93000a","on-primary-fixed":"#001b3d","tertiary-fixed":"#6ffbbe","inverse-surface":"#2d3133","on-primary":"#ffffff","on-secondary-fixed-variant":"#3a485b","surface-variant":"#e0e3e5","tertiary-fixed-dim":"#4edea3","on-primary-fixed-variant":"#2d476f","tertiary":"#000d06","on-tertiary-container":"#009c6b","surface-container":"#eceef0","on-tertiary-fixed":"#002113","surface-container-low":"#f2f4f6","primary-container":"#002147","error":"#ba1a1a","surface-container-lowest":"#ffffff","secondary-container":"#d5e3fc","error-container":"#ffdad6","on-surface-variant":"#44474e","surface-tint":"#465f88","primary-fixed-dim":"#aec7f6","inverse-on-surface":"#eff1f3","on-background":"#191c1e","on-secondary-container":"#57657a","surface-dim":"#d8dadc","on-secondary":"#ffffff","outline":"#74777f","surface-container-highest":"#e0e3e5","on-error":"#ffffff","on-secondary-fixed":"#0d1c2e","secondary-fixed-dim":"#b9c7df","inverse-primary":"#aec7f6","surface":"#f7f9fb","secondary":"#515f74","outline-variant":"#c4c6cf","primary":"#000a1e","surface-container-high":"#e6e8ea","primary-fixed":"#d6e3ff","on-primary-container":"#708ab5","tertiary-container":"#002718","background":"#f7f9fb","surface-bright":"#f7f9fb","secondary-fixed":"#d5e3fc","on-surface":"#191c1e","on-tertiary":"#ffffff"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"sm":"12px","xs":"4px","md":"16px","gutter":"24px","lg":"24px","xl":"32px","base":"8px","margin":"32px","xxl":"48px"},"fontFamily":{"mono-sm":["JetBrains Mono"],"body-lg":["Inter"],"label-md":["Inter"],"headline-sm":["Inter"],"display-lg":["Inter"],"headline-md":["Inter"],"body-md":["Inter"]},"fontSize":{"mono-sm":["12px",{"lineHeight":"16px","fontWeight":"500"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"600"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"display-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}]}}}};
+</script>
+<style>
+body{font-family:'Inter',sans-serif;background:#f7f9fb}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+.toast{position:fixed;top:80px;right:24px;z-index:9999;padding:12px 20px;border-radius:8px;color:#fff;font-size:13px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none}.toast.show{opacity:1}.toast-ok{background:#009c6b}.toast-err{background:#ba1a1a}
+@keyframes slideIn{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+.slide-in{animation:slideIn .3s ease}
+</style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- Sidebar -->
+<aside class="w-[280px] h-full fixed left-0 top-0 flex flex-col py-xl bg-surface-container-lowest border-r border-outline-variant z-40">
+<div class="px-lg mb-xxl flex flex-col gap-xs">
+  <span class="font-headline-md text-headline-md font-bold text-primary">EduNexus</span>
+  <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Command Center</span>
+</div>
+<nav class="flex-1 space-y-1">
+  <a class="flex items-center gap-md px-lg py-sm text-secondary hover:bg-surface-container transition-colors" href="/"><span class="material-symbols-outlined">dashboard</span><span class="font-label-md text-label-md">Dashboard</span></a>
+  <a class="flex items-center gap-md px-lg py-sm text-secondary hover:bg-surface-container transition-colors" href="/directory"><span class="material-symbols-outlined">group</span><span class="font-label-md text-label-md">Student Directory</span></a>
+  <a class="flex items-center gap-md px-lg py-sm text-primary font-bold border-r-4 border-primary bg-surface-container-high" href="/admissions"><span class="material-symbols-outlined">pending_actions</span><span class="font-label-md text-label-md">Admissions Queue</span></a>
+  <a class="flex items-center gap-md px-lg py-sm text-secondary hover:bg-surface-container transition-colors" href="/hierarchy"><span class="material-symbols-outlined">account_tree</span><span class="font-label-md text-label-md">Curriculum Map</span></a>
+</nav>
+</aside>
+<!-- TopBar -->
+<header class="fixed top-0 left-[280px] right-0 h-16 flex justify-between items-center px-gutter bg-surface border-b border-outline-variant z-30">
+<h1 class="font-headline-sm text-headline-sm font-black tracking-tight text-primary">Admissions Queue</h1>
+</header>
+<!-- Main -->
+<main class="ml-[280px] pt-16 pb-12 min-h-screen px-gutter">
+<div class="max-w-[1440px] mx-auto py-xl">
+  <div class="grid grid-cols-12 gap-lg">
+    <!-- Left: Queue Visualization -->
+    <div class="col-span-12 lg:col-span-8">
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+        <div class="p-lg border-b border-outline-variant flex justify-between items-center">
+          <div>
+            <h2 class="font-headline-md text-headline-md text-primary">Processing Pipeline</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">Applicants are processed in the order they arrive</p>
+          </div>
+          <div class="flex items-center gap-sm">
+            <span id="queueCount" class="font-mono-sm text-mono-sm bg-primary-container text-on-primary px-sm py-xs rounded">0 in queue</span>
+          </div>
+        </div>
+        <!-- Queue Items -->
+        <div id="queueContainer" class="p-lg space-y-md min-h-[200px]">
+          <p class="text-on-surface-variant text-sm text-center py-xl">Loading queue...</p>
+        </div>
+        <!-- Dequeue Button -->
+        <div class="p-lg bg-surface-container-low border-t border-outline-variant flex justify-between items-center">
+          <div class="flex items-center gap-sm">
+            <span class="material-symbols-outlined text-primary">arrow_forward</span>
+            <span class="font-label-md text-label-md text-primary">Process Next Applicant</span>
+          </div>
+          <button onclick="dequeue()" class="bg-on-tertiary-container text-on-primary px-lg py-sm rounded-lg font-label-md text-label-md hover:brightness-110 transition-all flex items-center gap-xs">
+            <span class="material-symbols-outlined text-[18px]">check_circle</span> Process Next
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Enqueue Form + Info -->
+    <div class="col-span-12 lg:col-span-4 flex flex-col gap-lg">
+      <!-- Enqueue Form -->
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+        <div class="p-lg border-b border-outline-variant">
+          <h3 class="font-headline-sm text-headline-sm text-primary flex items-center gap-sm">
+            <span class="material-symbols-outlined">person_add</span> New Application
+          </h3>
+        </div>
+        <div class="p-lg space-y-md">
+          <div>
+            <label class="font-label-md text-label-md text-secondary block mb-xs">Applicant Name</label>
+            <input id="enqueueInput" type="text" class="w-full border border-outline-variant rounded-lg px-md py-sm focus:ring-2 focus:ring-primary outline-none" placeholder="e.g. John Smith"/>
+          </div>
+          <button onclick="enqueue()" class="w-full bg-primary-container text-on-primary py-sm rounded-lg font-label-md text-label-md hover:brightness-110 transition-all flex items-center justify-center gap-xs">
+            <span class="material-symbols-outlined text-[18px]">add</span> Add Applicant
+          </button>
+        </div>
+      </div>
+      <!-- Quick Stats -->
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+        <h4 class="font-headline-sm text-headline-sm text-primary mb-md">How It Works</h4>
+        <div class="space-y-md">
+          <div class="flex items-start gap-sm">
+            <span class="material-symbols-outlined text-on-tertiary-container mt-1">check_circle</span>
+            <div><span class="font-label-md text-label-md text-primary">Fair Processing</span>
+              <p class="font-body-md text-body-md text-on-surface-variant">First applicant in is the first to be processed</p></div>
+          </div>
+          <div class="flex items-start gap-sm">
+            <span class="material-symbols-outlined text-on-tertiary-container mt-1">speed</span>
+            <div><span class="font-label-md text-label-md text-primary">Instant Processing</span>
+              <p class="font-body-md text-body-md text-on-surface-variant">Add and process applicants instantly</p></div>
+          </div>
+          <div class="flex items-start gap-sm">
+            <span class="material-symbols-outlined text-on-tertiary-container mt-1">storage</span>
+            <div><span class="font-label-md text-label-md text-primary">Persistent Records</span>
+              <p class="font-body-md text-body-md text-on-surface-variant">Queue state is automatically saved and restored</p></div>
+          </div>
+        </div>
+      </div>
+      <!-- Recent Activity -->
+      <div id="activityLog" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+        <h4 class="font-headline-sm text-headline-sm text-primary mb-md">Activity Log</h4>
+        <div id="logEntries" class="space-y-sm max-h-[200px] overflow-y-auto">
+          <p class="font-mono-sm text-mono-sm text-on-surface-variant">No activity yet</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="fixed bottom-0 left-0 w-full z-50 h-8 bg-primary-container flex items-center justify-between px-md border-t border-on-tertiary-container shadow-md">
+<div class="flex items-center gap-lg">
+  <span class="font-mono-sm text-mono-sm text-on-tertiary-container flex items-center gap-xs"><span class="w-2 h-2 rounded-full bg-on-tertiary-container animate-pulse"></span>Connected</span>
+</div>
+<span class="font-mono-sm text-mono-sm text-on-tertiary-container/60">© 2026 EduNexus</span>
+</footer>
+<div id="toast" class="toast"></div>
+
+<script>
+const logs=[];
+function toast(msg,ok=true){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+(ok?'toast-ok':'toast-err');setTimeout(()=>t.className='toast',2500);}
+function addLog(msg){logs.unshift({time:new Date().toLocaleTimeString(),msg});const c=document.getElementById('logEntries');c.innerHTML=logs.slice(0,10).map(l=>`<div class="font-mono-sm text-mono-sm text-on-surface-variant flex gap-sm"><span class="text-on-tertiary-container">${l.time}</span><span>${l.msg}</span></div>`).join('');}
+
+async function loadQueue(){
+  const res=await fetch('/api/admissions'); const data=await res.json();
+  const q=data.queue||[];
+  document.getElementById('queueCount').textContent=q.length+' in queue';
+  const c=document.getElementById('queueContainer');
+  if(!q.length){c.innerHTML='<div class="text-center py-xl"><span class="material-symbols-outlined text-outline text-[48px] mb-md block">inbox</span><p class="text-on-surface-variant">Queue is empty. Add applicants to begin processing.</p></div>';return;}
+  c.innerHTML=q.map((item,i)=>`
+    <div class="flex items-center gap-md p-md ${i===0?'bg-tertiary-fixed/10 border-l-4 border-on-tertiary-container':'bg-white border border-outline-variant'} rounded-lg slide-in" style="animation-delay:${i*0.05}s">
+      <div class="w-10 h-10 rounded-full ${i===0?'bg-on-tertiary-container text-white':'bg-secondary-container text-on-secondary-container'} flex items-center justify-center font-bold text-sm">${item.position}</div>
+      <div class="flex-1">
+        <span class="font-body-md text-body-md font-semibold ${i===0?'text-on-tertiary-container':'text-primary'}">${item.applicant}</span>
+        ${i===0?'<p class="font-mono-sm text-mono-sm text-on-tertiary-container">NEXT IN LINE</p>':''}
+      </div>
+      ${i===0?'<span class="material-symbols-outlined text-on-tertiary-container animate-pulse">arrow_forward</span>':''}
+    </div>
+  `).join('');
+}
+
+async function enqueue(){
+  const name=document.getElementById('enqueueInput').value.trim();
+  if(!name){toast('Enter applicant name',false);return;}
+  const res=await fetch('/api/admissions/enqueue',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name})});
+  const data=await res.json();
+  if(data.status==='ok'){toast('Enqueued: '+name);addLog('Enqueued: '+name);document.getElementById('enqueueInput').value='';loadQueue();}
+  else toast(data.error||'Enqueue failed',false);
+}
+document.getElementById('enqueueInput').addEventListener('keydown',e=>{if(e.key==='Enter')enqueue();});
+
+async function dequeue(){
+  const res=await fetch('/api/admissions/dequeue',{method:'POST'});const data=await res.json();
+  if(data.status==='ok'){
+    if(data.enrolled){
+      toast(data.enrollMessage);
+      addLog('Admitted: '+data.applicant+' → Student #'+data.studentId);
+    } else {
+      toast('Processed: '+data.applicant);
+      addLog('Processed: '+data.applicant+' ('+data.remaining+' remaining)');
+    }
+    loadQueue();
+  }
+  else toast(data.message||'Queue empty',false);
+}
+
+loadQueue();
+</script>
+</body></html>

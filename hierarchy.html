@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Curriculum Map | EduNexus</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-tertiary-fixed-variant":"#005236","on-error-container":"#93000a","on-primary-fixed":"#001b3d","tertiary-fixed":"#6ffbbe","inverse-surface":"#2d3133","on-primary":"#ffffff","on-secondary-fixed-variant":"#3a485b","surface-variant":"#e0e3e5","tertiary-fixed-dim":"#4edea3","on-primary-fixed-variant":"#2d476f","tertiary":"#000d06","on-tertiary-container":"#009c6b","surface-container":"#eceef0","on-tertiary-fixed":"#002113","surface-container-low":"#f2f4f6","primary-container":"#002147","error":"#ba1a1a","surface-container-lowest":"#ffffff","secondary-container":"#d5e3fc","error-container":"#ffdad6","on-surface-variant":"#44474e","surface-tint":"#465f88","primary-fixed-dim":"#aec7f6","inverse-on-surface":"#eff1f3","on-background":"#191c1e","on-secondary-container":"#57657a","surface-dim":"#d8dadc","on-secondary":"#ffffff","outline":"#74777f","surface-container-highest":"#e0e3e5","on-error":"#ffffff","on-secondary-fixed":"#0d1c2e","secondary-fixed-dim":"#b9c7df","inverse-primary":"#aec7f6","surface":"#f7f9fb","secondary":"#515f74","outline-variant":"#c4c6cf","primary":"#000a1e","surface-container-high":"#e6e8ea","primary-fixed":"#d6e3ff","on-primary-container":"#708ab5","tertiary-container":"#002718","background":"#f7f9fb","surface-bright":"#f7f9fb","secondary-fixed":"#d5e3fc","on-surface":"#191c1e","on-tertiary":"#ffffff"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"sm":"12px","xs":"4px","md":"16px","gutter":"24px","lg":"24px","xl":"32px","base":"8px","margin":"32px","xxl":"48px"},"fontFamily":{"mono-sm":["JetBrains Mono"],"body-lg":["Inter"],"label-md":["Inter"],"headline-sm":["Inter"],"display-lg":["Inter"],"headline-md":["Inter"],"body-md":["Inter"]},"fontSize":{"mono-sm":["12px",{"lineHeight":"16px","fontWeight":"500"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"600"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"display-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}]}}}};
+</script>
+<style>
+body{font-family:'Inter',sans-serif;background:#f7f9fb}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+.toast{position:fixed;top:80px;right:24px;z-index:9999;padding:12px 20px;border-radius:8px;color:#fff;font-size:13px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none}.toast.show{opacity:1}.toast-ok{background:#009c6b}.toast-err{background:#ba1a1a}
+.graph-node{cursor:pointer;transition:all .2s}.graph-node:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(0,33,71,.15)}
+.highlight{animation:pulse-highlight 1s ease 2}
+@keyframes pulse-highlight{0%,100%{box-shadow:0 0 0 0 rgba(0,156,107,0)}50%{box-shadow:0 0 0 8px rgba(0,156,107,.3)}}
+</style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- Sidebar -->
+<aside class="w-[280px] h-full fixed left-0 top-0 flex flex-col py-xl bg-surface-container-lowest border-r border-outline-variant z-40">
+<div class="px-lg mb-xxl flex flex-col gap-xs">
+  <span class="font-headline-md text-headline-md font-bold text-primary">EduNexus</span>
+  <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Command Center</span>
+</div>
+<nav class="flex-1 space-y-1">
+  <a class="flex items-center gap-md px-lg py-sm text-secondary hover:bg-surface-container transition-colors" href="/"><span class="material-symbols-outlined">dashboard</span><span class="font-label-md text-label-md">Dashboard</span></a>
+  <a class="flex items-center gap-md px-lg py-sm text-secondary hover:bg-surface-container transition-colors" href="/directory"><span class="material-symbols-outlined">group</span><span class="font-label-md text-label-md">Student Directory</span></a>
+  <a class="flex items-center gap-md px-lg py-sm text-secondary hover:bg-surface-container transition-colors" href="/admissions"><span class="material-symbols-outlined">pending_actions</span><span class="font-label-md text-label-md">Admissions Queue</span></a>
+  <a class="flex items-center gap-md px-lg py-sm text-primary font-bold border-r-4 border-primary bg-surface-container-high" href="/hierarchy"><span class="material-symbols-outlined">account_tree</span><span class="font-label-md text-label-md">Curriculum Map</span></a>
+</nav>
+</aside>
+<!-- TopBar -->
+<header class="fixed top-0 left-[280px] right-0 h-16 flex justify-between items-center px-gutter bg-surface border-b border-outline-variant z-30">
+<h1 class="font-headline-sm text-headline-sm font-black tracking-tight text-primary">Curriculum Map</h1>
+</header>
+<!-- Main -->
+<main class="ml-[280px] pt-16 pb-12 min-h-screen px-gutter">
+<div class="max-w-[1440px] mx-auto py-xl">
+  <div class="grid grid-cols-12 gap-lg">
+    <!-- Course Prerequisite Graph -->
+    <div class="col-span-12 lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+      <div class="p-lg border-b border-outline-variant flex justify-between items-center">
+        <div>
+          <h2 class="font-headline-md text-headline-md text-primary">Course Prerequisites</h2>
+          <p class="font-body-md text-body-md text-on-surface-variant">Click a course to explore its prerequisite chain</p>
+        </div>
+        <div class="flex bg-surface-container-low p-xs rounded-lg border border-outline-variant">
+          <button id="btnBFS" onclick="setMode('bfs')" class="px-md py-xs font-label-md text-label-md rounded bg-surface-container-lowest text-primary shadow-sm">Level Order</button>
+          <button id="btnDFS" onclick="setMode('dfs')" class="px-md py-xs font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors">Deep Dive</button>
+        </div>
+      </div>
+      <div id="graphContainer" class="p-xl min-h-[500px] relative bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px]">
+        <p class="text-on-surface-variant text-sm text-center">Loading graph...</p>
+      </div>
+      <!-- Traversal Result -->
+      <div id="traversalResult" class="p-lg bg-surface-container-low border-t border-outline-variant hidden">
+        <div class="flex items-center gap-sm mb-sm">
+          <span class="material-symbols-outlined text-on-tertiary-container">route</span>
+          <span class="font-label-md text-label-md text-primary">Prerequisite Path</span>
+        </div>
+        <div id="traversalPath" class="font-mono-sm text-mono-sm text-on-surface"></div>
+      </div>
+    </div>
+
+    <!-- Right Panel: BST + Info -->
+    <div class="col-span-12 lg:col-span-4 flex flex-col gap-lg">
+      <!-- BST Inorder Traversal -->
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+        <div class="p-lg border-b border-outline-variant flex items-center gap-sm">
+          <span class="material-symbols-outlined text-primary">account_tree</span>
+          <h3 class="font-headline-sm text-headline-sm text-primary">Student Index</h3>
+        </div>
+        <div id="bstContainer" class="p-lg space-y-sm max-h-[300px] overflow-y-auto">
+          <p class="text-on-surface-variant text-sm">Loading BST...</p>
+        </div>
+        <div class="p-md bg-surface-container-low border-t border-outline-variant">
+          <div class="flex items-center gap-sm">
+            <input id="bstSearchInput" type="number" class="flex-1 border border-outline-variant rounded-lg px-md py-xs text-sm focus:ring-2 focus:ring-primary outline-none" placeholder="Search by Student ID..."/>
+            <button onclick="bstSearch()" class="bg-primary-container text-on-primary px-md py-xs rounded-lg font-label-md text-label-md hover:brightness-110">Search</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- University Org Tree (General Tree) -->
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+        <div class="flex items-center gap-sm mb-md">
+          <span class="material-symbols-outlined text-primary">account_tree</span>
+          <h4 class="font-headline-sm text-headline-sm text-primary">University Structure</h4>
+        </div>
+        <div id="orgTreeContainer" class="space-y-xs text-sm">
+          <p class="text-on-surface-variant">Loading...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="fixed bottom-0 left-0 w-full z-50 h-8 bg-primary-container flex items-center justify-between px-md border-t border-on-tertiary-container shadow-md">
+<div class="flex items-center gap-lg">
+  <span class="font-mono-sm text-mono-sm text-on-tertiary-container flex items-center gap-xs"><span class="w-2 h-2 rounded-full bg-on-tertiary-container animate-pulse"></span>Connected</span>
+</div>
+<span class="font-mono-sm text-mono-sm text-on-tertiary-container/60">© 2026 EduNexus</span>
+</footer>
+<div id="toast" class="toast"></div>
+
+<script>
+let traversalMode='bfs';
+let graphData={};
+function toast(msg,ok=true){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+(ok?'toast-ok':'toast-err');setTimeout(()=>t.className='toast',2500);}
+
+function setMode(m){
+  traversalMode=m;
+  document.getElementById('btnBFS').className='px-md py-xs font-label-md text-label-md rounded '+(m==='bfs'?'bg-surface-container-lowest text-primary shadow-sm':'text-on-surface-variant hover:text-primary transition-colors');
+  document.getElementById('btnDFS').className='px-md py-xs font-label-md text-label-md rounded '+(m==='dfs'?'bg-surface-container-lowest text-primary shadow-sm':'text-on-surface-variant hover:text-primary transition-colors');
+}
+
+// Position courses in a proper hierarchical tree layout
+// Tier 0: Top-level course (no dependents pointing to it from above)
+// Tier 1: Direct prerequisites of tier 0
+// Tier 2: Next level down
+// etc.
+const coursePositions = {
+  'Machine_Learning':         {x: 50, y: 30},
+  'Advanced_Algorithms':      {x: 30, y: 160},
+  'Linear_Algebra':           {x: 70, y: 160},
+  'Data_Structures':          {x: 15, y: 300},
+  'Discrete_Math':            {x: 42, y: 300},
+  'Database_Systems':         {x: 68, y: 300},
+  'Operating_Systems':        {x: 90, y: 300},
+  'Programming_Fundamentals': {x: 15, y: 440},
+  'Calculus':                 {x: 42, y: 440},
+  'Computer_Architecture':    {x: 78, y: 440},
+  'Digital_Logic':            {x: 78, y: 570}
+};
+
+async function loadGraph(){
+  const res=await fetch('/api/curriculum/prereqs'); const data=await res.json();
+  graphData=data.graph||{};
+  renderGraph();
+}
+
+function renderGraph(){
+  const c=document.getElementById('graphContainer');
+  const nodes=Object.keys(graphData);
+  if(!nodes.length){c.innerHTML='<p class="text-center text-on-surface-variant py-xl">No course data found</p>';return;}
+
+  // SVG for edges — use curved paths for cleaner look
+  let svg='<svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index:1">';
+  for(const [from, tos] of Object.entries(graphData)){
+    const fp=coursePositions[from]||{x:50,y:50};
+    for(const to of tos){
+      const tp=coursePositions[to]||{x:50,y:50};
+      // Offset start from bottom of source node, end at top of target node
+      const y1 = fp.y + 48;
+      const y2 = tp.y - 4;
+      svg+=`<line x1="${fp.x}%" y1="${y1}px" x2="${tp.x}%" y2="${y2}px" stroke="#c4c6cf" stroke-width="2" marker-end="url(#arrow)"/>`;
+    }
+  }
+  svg+='<defs><marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#74777f"/></marker></defs></svg>';
+
+  // Node elements
+  let html=svg;
+  for(const node of nodes){
+    const pos=coursePositions[node]||{x:50,y:50};
+    const prereqs=(graphData[node]||[]).length;
+    html+=`<div id="node-${node}" class="graph-node absolute p-sm bg-white border border-outline-variant rounded-lg shadow-sm hover:border-primary transition-all" style="left:${pos.x}%;top:${pos.y}px;transform:translateX(-50%);z-index:2;min-width:120px;text-align:center" onclick="runTraversal('${node}')">
+      <div class="font-label-md text-label-md text-primary">${node.replace(/_/g,' ')}</div>
+      <div class="font-mono-sm text-[10px] text-secondary">${prereqs} prerequisite${prereqs!==1?'s':''}</div>
+    </div>`;
+  }
+  c.innerHTML=html;
+  c.style.height='640px';
+}
+
+async function runTraversal(course){
+  // Reset highlights
+  document.querySelectorAll('.graph-node').forEach(n=>{n.style.borderColor='';n.style.backgroundColor='';});
+  const res=await fetch(`/api/curriculum/prereqs/${course}?mode=${traversalMode}`);
+  const data=await res.json();
+  const path=data.path||[];
+  // Show result
+  const rEl=document.getElementById('traversalResult');
+  rEl.classList.remove('hidden');
+  document.getElementById('traversalPath').innerHTML=`<span class="text-on-tertiary-container font-bold">Prerequisites:</span> ${path.map(p=>p.replace(/_/g,' ')).join(' → ')}`;
+  // Highlight nodes sequentially
+  path.forEach((p,i)=>{
+    setTimeout(()=>{
+      const el=document.getElementById('node-'+p);
+      if(el){el.style.borderColor='#009c6b';el.style.backgroundColor='rgba(111,251,190,0.15)';el.classList.add('highlight');}
+    }, i*400);
+  });
+  toast(`Explored ${path.length} courses from "${course.replace(/_/g,' ')}"`);
+}
+
+// BST
+async function loadBST(){
+  const res=await fetch('/api/hierarchy/bst'); const data=await res.json();
+  const students=data.students||[];
+  const c=document.getElementById('bstContainer');
+  if(!students.length){c.innerHTML='<p class="text-on-surface-variant text-sm">No students in BST</p>';return;}
+  c.innerHTML='<p class="font-mono-sm text-mono-sm text-on-surface-variant mb-sm">Sorted by Student ID:</p>'+
+    students.map((s,i)=>`<div id="bst-${s.id}" class="flex items-center justify-between p-sm bg-surface-container-low rounded-lg">
+      <div class="flex items-center gap-sm">
+        <span class="font-mono-sm text-mono-sm text-on-tertiary-container w-6 text-center">${i+1}</span>
+        <span class="font-body-md text-body-md text-primary font-semibold">${s.name.replace(/_/g,' ')}</span>
+      </div>
+      <div class="flex items-center gap-sm">
+        <span class="font-mono-sm text-mono-sm text-secondary">ID:${s.id}</span>
+        <span class="font-body-md text-body-md font-bold text-primary">${s.gpa.toFixed(2)}</span>
+      </div>
+    </div>`).join('');
+}
+
+async function bstSearch(){
+  const id=parseInt(document.getElementById('bstSearchInput').value);
+  if(isNaN(id)){toast('Enter a valid ID',false);return;}
+  const res=await fetch('/api/hierarchy/bst/search/'+id); const data=await res.json();
+  if(data.found){
+    toast('Found: '+data.student.name.replace(/_/g,' ')+' (GPA: '+data.student.gpa.toFixed(2)+')');
+    const el=document.getElementById('bst-'+id);
+    if(el){el.style.backgroundColor='rgba(111,251,190,0.3)';el.classList.add('highlight');setTimeout(()=>{el.style.backgroundColor='';},3000);}
+  } else {toast('Student ID '+id+' not found',false);}
+}
+
+// Org Tree (General Tree)
+async function loadOrgTree(){
+  const res=await fetch('/api/hierarchy/orgtree'); const data=await res.json();
+  const c=document.getElementById('orgTreeContainer');
+  function renderNode(node, depth=0){
+    const indent=depth*16;
+    const icons={university:'school',department:'domain',faculty:'person'};
+    const icon=icons[node.type]||'circle';
+    const colors={university:'text-primary font-bold',department:'text-secondary font-semibold',faculty:'text-on-surface-variant'};
+    const cls=colors[node.type]||'';
+    let html=`<div style="padding-left:${indent}px" class="flex items-center gap-xs py-1 ${cls}">
+      <span class="material-symbols-outlined text-[16px]">${icon}</span>
+      <span>${node.name}</span>
+      ${node.role?'<span class="text-xs text-on-surface-variant/60 ml-1">('+node.role+')</span>':''}
+    </div>`;
+    if(node.children) node.children.forEach(ch=>{html+=renderNode(ch,depth+1);});
+    return html;
+  }
+  c.innerHTML=renderNode(data);
+}
+
+loadGraph();
+loadBST();
+loadOrgTree();
+</script>
+</body></html>
